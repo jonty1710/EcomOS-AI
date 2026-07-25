@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import Protocol
 
 from app.core.config import get_settings
+from app.db.session_helper import ensure_session_exists
 from app.models.schemas import ModuleSection, ReportResponse, ReportSummary
 from app.scoring.decision import DIMENSION_LABELS, DIMENSION_WEIGHTS
 
@@ -125,6 +126,7 @@ class SupabaseReportRepository:
         self._client: Client = create_client(settings.supabase_url, settings.supabase_service_role_key)
 
     def create_report(self, report: ReportResponse, session_id: str) -> None:
+        ensure_session_exists(self._client, session_id)
         product = (
             self._client.table("products")
             .upsert(

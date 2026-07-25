@@ -15,6 +15,7 @@ from typing import Protocol
 
 from app.collection.schemas import ProductProfile, ProductProfileSummary
 from app.core.config import get_settings
+from app.db.session_helper import ensure_session_exists
 
 DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
 PROFILES_FILE = DATA_DIR / "profiles.json"
@@ -123,6 +124,7 @@ class SupabaseProfileRepository:
         self._client: Client = create_client(settings.supabase_url, settings.supabase_service_role_key)
 
     def create_profile(self, profile: ProductProfile) -> None:
+        ensure_session_exists(self._client, profile.session_id)
         self._client.table("product_profiles").insert(
             {
                 "id": profile.id,
