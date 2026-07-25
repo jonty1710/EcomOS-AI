@@ -1,0 +1,92 @@
+{
+  "glass": {
+    "material": "glass",
+    "aliases": [],
+    "fragility": "High",
+    "durability_notes": "Rigid and scratch-resistant, but shatters on impact with no partial-failure mode — it either survives transit intact or breaks outright.",
+    "sustainability_notes": "Infinitely recyclable, but heavier than most alternatives — higher shipping-related carbon footprint per unit.",
+    "common_compliance_flags": ["food_safety"],
+    "recommended_packaging_notes": "Requires a rigid outer box plus cushioning on all sides — bubble wrap alone is not sufficient for glass."
+  },
+  "ceramic": {
+    "material": "ceramic",
+    "aliases": ["porcelain"],
+    "fragility": "High",
+    "durability_notes": "Chip-prone at edges and corners; heat-tolerant in normal use but fails suddenly on impact, similar to glass.",
+    "sustainability_notes": "Long usable life if it survives transit intact — breakage in shipping, not wear, is the main lifecycle/waste concern.",
+    "common_compliance_flags": ["food_safety"],
+    "recommended_packaging_notes": "Individual wrap per piece, plus rigid divider inserts for multi-piece sets."
+  },
+  "electronic": {
+    "material": "electronic",
+    "aliases": ["electronics"],
+    "fragility": "High",
+    "durability_notes": "Sensitive to moisture, drops, and static discharge; internal component quality is not visually inspectable at receipt.",
+    "sustainability_notes": "E-waste disposal is a genuine downstream concern — reference cautiously in any brand sustainability story.",
+    "common_compliance_flags": ["electronics_certification", "import_restricted"],
+    "recommended_packaging_notes": "Anti-static packaging plus foam inserts; never ship loose in a box alongside other items."
+  },
+  "plastic": {
+    "material": "plastic",
+    "aliases": [],
+    "fragility": "Low",
+    "durability_notes": "High impact tolerance; can discolor or become brittle under prolonged UV/heat exposure.",
+    "sustainability_notes": "Rising customer sensitivity to single-use plastic — recycled or BPA-free claims are a real differentiation lever, but must be verifiable against a supplier certificate, not just stated.",
+    "common_compliance_flags": ["food_safety"],
+    "recommended_packaging_notes": "Standard poly mailer or corrugated box; packaging cost is low relative to other materials."
+  },
+  "rubber": {
+    "material": "rubber",
+    "aliases": ["silicone"],
+    "fragility": "Low",
+    "durability_notes": "Flexible and tear-resistant; years of UV exposure can eventually cause brittleness or cracking.",
+    "sustainability_notes": "Non-biodegradable, but a long usable life reduces replacement frequency relative to more disposable materials.",
+    "common_compliance_flags": ["food_safety"],
+    "recommended_packaging_notes": "Minimal cushioning needed — one of the lowest packaging-cost materials in this catalog."
+  },
+  "fabric": {
+    "material": "fabric",
+    "aliases": ["cotton"],
+    "fragility": "Low",
+    "durability_notes": "Susceptible to tearing, staining, and colour fade over time; care-instruction accuracy directly affects return rate.",
+    "sustainability_notes": "Organic/sustainable-fabric claims are a genuine, high-customer-sensitivity differentiator — but only if backed by a verifiable supplier certificate.",
+    "common_compliance_flags": ["textile_labeling"],
+    "recommended_packaging_notes": "Poly bag or padded mailer — compressible, so shipping cost is comparatively low."
+  },
+  "leather": {
+    "material": "leather",
+    "aliases": [],
+    "fragility": "Low",
+    "durability_notes": "Long usable life if genuine; synthetic ('PU leather') wears and cracks noticeably faster — misrepresentation between the two is a common source of complaints.",
+    "sustainability_notes": "Genuine leather draws real sustainability scrutiny — verify and disclose genuine vs. synthetic clearly rather than leaving it ambiguous.",
+    "common_compliance_flags": [],
+    "recommended_packaging_notes": "Dust bag plus rigid box for structured items such as bags and wallets."
+  },
+  "metal": {
+    "material": "metal",
+    "aliases": ["steel", "aluminium", "aluminum"],
+    "fragility": "Medium",
+    "durability_notes": "High structural durability; added weight increases shipping cost meaningfully, and some finishes scratch or corrode over time.",
+    "sustainability_notes": "Highly recyclable — frequently positioned as a premium, durable alternative to plastic.",
+    "common_compliance_flags": ["food_safety"],
+    "recommended_packaging_notes": "Corrugated box with edge protectors — weight drives packaging/shipping cost more than fragility does here."
+  },
+  "wood": {
+    "material": "wood",
+    "aliases": ["bamboo"],
+    "fragility": "Medium",
+    "durability_notes": "Durable with proper finishing; untreated wood is susceptible to moisture warping and pest damage.",
+    "sustainability_notes": "Bamboo is fast-renewing and a strong sustainability differentiator if responsibly sourced; hardwood sustainability claims should be independently verified.",
+    "common_compliance_flags": [],
+    "recommended_packaging_notes": "Corrugated box with void fill — corners are the most common transit-damage point."
+  },
+  "paper": {
+    "material": "paper",
+    "aliases": ["cardboard"],
+    "fragility": "Medium",
+    "durability_notes": "Low moisture and impact tolerance; typically used for low-value or single-use items rather than durable goods.",
+    "sustainability_notes": "The strongest sustainability story of any material in this catalog — genuinely recyclable and biodegradable.",
+    "common_compliance_flags": [],
+    "recommended_packaging_notes": "Often ships within its own structure with minimal extra packaging — protect from moisture in transit."
+  }
+}

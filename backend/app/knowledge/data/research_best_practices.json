@@ -1,0 +1,81 @@
+{
+  "general": {
+    "category": null,
+    "checklist": [
+      "Confirm at least two independent price sources before trusting a price band (PRS §5 Evidence Hierarchy)",
+      "Never treat a single review or a single supplier quote as representative — look for a pattern across multiple sources",
+      "Distinguish Verified facts from Estimated, Assumed, and Unknown ones explicitly — never let a confident guess pass as a fact (PRS §17)",
+      "Check GST/HSN classification with a professional before finalizing pricing",
+      "Always request a physical sample before committing to a supplier's MOQ"
+    ],
+    "evidence_priority_notes": [
+      "Government and manufacturer sources outrank marketplace listings, which outrank customer reviews, which outrank forum/social chatter (PRS §5)",
+      "AI reasoning without a real source behind it is the weakest evidence tier — treat it as a starting hypothesis, not a conclusion"
+    ],
+    "common_pitfalls": [
+      "Anchoring on the first price or quote seen instead of gathering a real range",
+      "Treating a low review count as 'not enough evidence to worry about' rather than 'not enough evidence to trust either way'",
+      "Skipping manual verification on Supplier/Compliance items just because the rest of the research looked solid"
+    ]
+  },
+  "Electronics Accessories": {
+    "category": "Electronics Accessories",
+    "checklist": [
+      "Verify BIS/CRS certification status before sourcing at volume",
+      "Test compatibility claims against the specific device models advertised, not just the general category",
+      "Check for counterfeit or trademark risk if the product resembles a known branded accessory"
+    ],
+    "evidence_priority_notes": [
+      "Marketplace review complaints about 'stopped working' or 'not compatible' are a stronger signal here than in most categories — weight them accordingly"
+    ],
+    "common_pitfalls": [
+      "Assuming a supplier's compatibility claim is accurate without independent verification",
+      "Underestimating return rate — electronics accessories return at nearly double the typical cross-category rate"
+    ]
+  },
+  "Beauty & Personal Care": {
+    "category": "Beauty & Personal Care",
+    "checklist": [
+      "Confirm CDSCO compliance for any formulated product",
+      "Review ingredient-list transparency against the supplier's certificate",
+      "Check for allergy or patch-test complaints in existing reviews, not just star ratings"
+    ],
+    "evidence_priority_notes": [
+      "A high star rating with buried allergy complaints in the review text is a real risk — read review text, not only the aggregate score"
+    ],
+    "common_pitfalls": [
+      "Treating 'natural' or 'organic' claims as verified without a supplier certificate",
+      "Underweighting formulation-safety risk relative to packaging or logistics risk"
+    ]
+  },
+  "Baby & Kids": {
+    "category": "Baby & Kids",
+    "checklist": [
+      "Confirm toy safety / BIS certification before sourcing",
+      "Check age-appropriateness and small-parts warnings",
+      "Read safety-related complaints in full — do not rely on star rating alone"
+    ],
+    "evidence_priority_notes": [
+      "A single credible safety complaint should outweigh many positive but safety-irrelevant reviews"
+    ],
+    "common_pitfalls": [
+      "Treating this as a normal commodity category — safety stakes are categorically higher here",
+      "Under-investing in manual compliance verification just because the product 'looks like every other listing'"
+    ]
+  },
+  "Apparel & Fashion": {
+    "category": "Apparel & Fashion",
+    "checklist": [
+      "Verify size-chart accuracy against actual garment measurements, not just the printed size label",
+      "Check fabric composition claims against the supplier's certificate",
+      "Review fit and true-to-size complaints specifically"
+    ],
+    "evidence_priority_notes": [
+      "Return-rate evidence matters more here than in almost any other category — apparel's 18%+ typical return rate makes size/fit research disproportionately high-value"
+    ],
+    "common_pitfalls": [
+      "Copying a competitor's size chart without verifying it matches your own supplier's actual cut",
+      "Underestimating return cost in the profit model specifically for apparel"
+    ]
+  }
+}

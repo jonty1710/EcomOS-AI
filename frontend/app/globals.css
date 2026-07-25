@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark mode is the default (FBP §19 UX Rules). Light mode is fully, independently
+   styled below via :root[data-theme="light"] — never an inverted afterthought. */
+
+:root,
+:root[data-theme="dark"] {
+  --background: 222 20% 8%;
+  --foreground: 210 20% 96%;
+
+  --card: 222 18% 11%;
+  --card-foreground: 210 20% 96%;
+
+  --border: 217 15% 20%;
+  --input: 217 15% 20%;
+  --ring: 217 91% 60%;
+
+  --primary: 217 91% 60%;
+  --primary-foreground: 210 20% 98%;
+
+  --secondary: 217 15% 18%;
+  --secondary-foreground: 210 20% 96%;
+
+  --muted: 217 15% 16%;
+  --muted-foreground: 215 15% 65%;
+
+  --accent: 217 15% 18%;
+  --accent-foreground: 210 20% 96%;
+
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 210 20% 98%;
+
+  --success: 142 60% 45%;
+  --success-foreground: 210 20% 98%;
+
+  --warning: 38 92% 50%;
+  --warning-foreground: 30 20% 10%;
+
+  --radius: 0.5rem;
+}
+
+:root[data-theme="light"] {
+  --background: 0 0% 100%;
+  --foreground: 222 20% 12%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222 20% 12%;
+
+  --border: 214 20% 88%;
+  --input: 214 20% 88%;
+  --ring: 217 91% 55%;
+
+  --primary: 217 91% 50%;
+  --primary-foreground: 210 20% 98%;
+
+  --secondary: 214 20% 95%;
+  --secondary-foreground: 222 20% 12%;
+
+  --muted: 214 20% 95%;
+  --muted-foreground: 215 15% 40%;
+
+  --accent: 214 20% 95%;
+  --accent-foreground: 222 20% 12%;
+
+  --destructive: 0 72% 45%;
+  --destructive-foreground: 210 20% 98%;
+
+  --success: 142 60% 35%;
+  --success-foreground: 210 20% 98%;
+
+  --warning: 38 92% 42%;
+  --warning-foreground: 30 20% 10%;
+
+  --radius: 0.5rem;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}

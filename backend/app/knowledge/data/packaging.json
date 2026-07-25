@@ -1,0 +1,74 @@
+{
+  "Light_High": {
+    "weight_class": "Light", "fragility": "High",
+    "suggested_packaging": "Bubble wrap + rigid small box",
+    "cost_band_pct_of_selling_price": [8, 15],
+    "damage_prevention_notes": [
+      "Wrap the item itself before placing it in the box — don't rely on loose fill alone",
+      "Leave no empty space the item can shift into during transit"
+    ],
+    "common_mistakes": ["Using only a padded mailer for a fragile item because it's lightweight — weight and fragility are independent risks"]
+  },
+  "Light_Medium": {
+    "weight_class": "Light", "fragility": "Medium",
+    "suggested_packaging": "Padded mailer",
+    "cost_band_pct_of_selling_price": [4, 8],
+    "damage_prevention_notes": ["Ensure the padding layer fully surrounds any rigid edges or corners"],
+    "common_mistakes": ["Under-padding corners, which are the most common damage point for medium-fragility items"]
+  },
+  "Light_Low": {
+    "weight_class": "Light", "fragility": "Low",
+    "suggested_packaging": "Poly mailer",
+    "cost_band_pct_of_selling_price": [1, 3],
+    "damage_prevention_notes": ["A simple poly mailer is sufficient — avoid over-packaging low-fragility items, it only adds unnecessary cost"],
+    "common_mistakes": ["Over-packaging, which quietly erodes margin without meaningfully reducing an already-low damage risk"]
+  },
+  "Medium_High": {
+    "weight_class": "Medium", "fragility": "High",
+    "suggested_packaging": "Bubble wrap + double-walled box",
+    "cost_band_pct_of_selling_price": [10, 18],
+    "damage_prevention_notes": [
+      "Double-walled corrugate meaningfully outperforms single-wall for this weight/fragility combination",
+      "Use corner protectors in addition to bubble wrap for box edges"
+    ],
+    "common_mistakes": ["Using a single-wall box to save cost — this is the combination most likely to arrive damaged if under-packaged"]
+  },
+  "Medium_Medium": {
+    "weight_class": "Medium", "fragility": "Medium",
+    "suggested_packaging": "Corrugated box with void fill",
+    "cost_band_pct_of_selling_price": [5, 10],
+    "damage_prevention_notes": ["Void fill should prevent any internal movement — shake-test the sealed box before shipping"],
+    "common_mistakes": ["Leaving excess empty space in the box, which lets the item shift and absorb impact at its weakest point"]
+  },
+  "Medium_Low": {
+    "weight_class": "Medium", "fragility": "Low",
+    "suggested_packaging": "Corrugated box",
+    "cost_band_pct_of_selling_price": [2, 5],
+    "damage_prevention_notes": ["Standard single-wall corrugate is generally sufficient at this weight/fragility combination"],
+    "common_mistakes": ["Undersizing the box, which stresses the seams under normal handling weight"]
+  },
+  "Heavy_High": {
+    "weight_class": "Heavy", "fragility": "High",
+    "suggested_packaging": "Custom foam insert + reinforced crate",
+    "cost_band_pct_of_selling_price": [12, 20],
+    "damage_prevention_notes": [
+      "This is the highest-risk combination in the catalog — invest in custom-fit foam rather than generic void fill",
+      "Confirm the courier's handling process actually supports crated/oversized fragile freight before committing to this packaging plan"
+    ],
+    "common_mistakes": ["Assuming standard courier handling will treat a heavy, fragile package with appropriate care without explicit fragile-handling labeling and crating"]
+  },
+  "Heavy_Medium": {
+    "weight_class": "Heavy", "fragility": "Medium",
+    "suggested_packaging": "Reinforced corrugated box + edge protectors",
+    "cost_band_pct_of_selling_price": [6, 12],
+    "damage_prevention_notes": ["Edge protectors meaningfully reduce corner-crush damage under stacking weight in transit"],
+    "common_mistakes": ["Using standard-weight corrugate rated below the item's actual weight"]
+  },
+  "Heavy_Low": {
+    "weight_class": "Heavy", "fragility": "Low",
+    "suggested_packaging": "Reinforced corrugated box",
+    "cost_band_pct_of_selling_price": [3, 7],
+    "damage_prevention_notes": ["Reinforcement is primarily to survive handling weight, not fragility risk, at this combination"],
+    "common_mistakes": ["Underestimating packaging cost as a fraction of price for low-value heavy items, where shipping/packaging can dominate the cost structure"]
+  }
+}

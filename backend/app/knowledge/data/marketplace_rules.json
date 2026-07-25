@@ -1,0 +1,46 @@
+{
+  "amazon": {
+    "marketplace": "amazon",
+    "typical_commission_pct_band": [5, 20],
+    "closing_fee_notes": "Amazon charges a per-unit closing/fixed fee in addition to the referral (%) fee for lower-priced items — factor it separately, not as part of the percentage.",
+    "prohibited_category_notes": [
+      "Certain categories (medical devices, specific electronics) require category approval before listing",
+      "Counterfeit or trademark-infringing listings are aggressively delisted — verify brand rights before listing a branded-sounding product"
+    ],
+    "listing_requirements": [
+      "High-resolution main image on a pure white background",
+      "Accurate GST/HSN classification required at listing time",
+      "Brand Registry / A+ Content needed for richer listing content"
+    ],
+    "return_policy_notes": "Amazon's buyer-friendly return window (often 7-10 days, category-dependent) shifts real-world return risk onto the seller — estimate return_cost conservatively, not optimistically.",
+    "payment_cycle_notes": "Typical settlement is 7-14 days post-delivery confirmation, category-dependent — verify the current cycle before modeling cash flow."
+  },
+  "flipkart": {
+    "marketplace": "flipkart",
+    "typical_commission_pct_band": [5, 25],
+    "closing_fee_notes": "Similar tiered fee structure to Amazon — a slab-based collection fee applies at lower price points, separate from the commission percentage.",
+    "prohibited_category_notes": [
+      "Some categories require Flipkart-specific quality certification before approval",
+      "Brand-restricted categories need an explicit brand NOC (No Objection Certificate)"
+    ],
+    "listing_requirements": [
+      "Listing Quality Score affects search ranking — complete specifications matter, not just images",
+      "Accurate GST/HSN classification required"
+    ],
+    "return_policy_notes": "A comparably buyer-friendly return window to Amazon — estimate return risk conservatively, especially for fragile or apparel categories.",
+    "payment_cycle_notes": "Typical settlement is around 7-15 days post-delivery — verify the current cycle before modeling cash flow."
+  },
+  "meesho": {
+    "marketplace": "meesho",
+    "typical_commission_pct_band": [0, 10],
+    "closing_fee_notes": "Meesho's headline commission is comparatively low, but it has its own per-order fixed charges — verify the current fee slab rather than assuming near-zero cost.",
+    "prohibited_category_notes": [
+      "Primarily a reseller-driven, value/fashion-focused marketplace — high-value electronics are less common and less competitive here"
+    ],
+    "listing_requirements": [
+      "Simpler listing process than Amazon/Flipkart, but catalog quality still affects reseller pickup rate"
+    ],
+    "return_policy_notes": "Return/exchange handling is typically reseller-mediated, which can extend effective resolution time compared to Amazon or Flipkart.",
+    "payment_cycle_notes": "Settlement can lag Amazon/Flipkart — verify the current payout cycle before assuming a specific cash-flow timeline."
+  }
+}

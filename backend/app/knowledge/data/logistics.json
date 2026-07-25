@@ -1,0 +1,38 @@
+{
+  "Light": {
+    "weight_class": "Light",
+    "typical_shipping_cost_band_pct": [5, 10],
+    "typical_rto_causes": [
+      "COD refusal at the door",
+      "Buyer changed mind — low-commitment impulse purchase",
+      "Address or serviceability issues in the delivery pincode"
+    ],
+    "typical_return_causes": ["Not as described", "Size/fit mismatch", "Quality below expectation"],
+    "cod_notes": "Light, low-value items see the highest COD-refusal rate of any weight class — prepaid discounts are usually worth testing to offset this.",
+    "carrier_notes": "Fits the standard courier network without special handling."
+  },
+  "Medium": {
+    "weight_class": "Medium",
+    "typical_shipping_cost_band_pct": [4, 8],
+    "typical_rto_causes": [
+      "Damage in transit",
+      "COD refusal",
+      "Delivery attempt failures in tier-2/tier-3 pincodes"
+    ],
+    "typical_return_causes": ["Damage on arrival", "Not as described", "Missing accessories or parts"],
+    "cod_notes": "Moderate COD-refusal rate — consider a prepaid-only policy for higher-value medium-weight items specifically.",
+    "carrier_notes": "Standard courier network; confirm weight-based freight slabs don't quietly erode margin at this weight class."
+  },
+  "Heavy": {
+    "weight_class": "Heavy",
+    "typical_shipping_cost_band_pct": [8, 15],
+    "typical_rto_causes": [
+      "Buyer unavailable for a bulky/scheduled delivery",
+      "Damage in transit — handling risk rises with size and weight",
+      "Serviceability gaps outside metro areas"
+    ],
+    "typical_return_causes": ["Damage in transit", "Assembly or installation issues", "Not as described"],
+    "cod_notes": "Heavy items should strongly prefer prepaid — reverse-logistics cost for a refused COD heavy item is disproportionately high.",
+    "carrier_notes": "May require specialized or surface logistics — confirm the courier partner actually services heavy-item categories before trusting a shipping-cost estimate."
+  }
+}

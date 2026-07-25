@@ -1,0 +1,83 @@
+{
+  "food_safety": {
+    "flag_key": "food_safety",
+    "label": "Food Safety / FSSAI Compliance",
+    "description": "Applies to any product that contacts or contains food — packaging, cookware, containers, or ingredients.",
+    "applies_when": "The material or category involves direct food contact (kitchenware, food storage, some cosmetics).",
+    "required_action": "Confirm FSSAI registration/license where applicable, and verify food-grade material certification from the supplier.",
+    "penalty_risk_notes": "Product seizure and enforcement risk for non-compliant food-contact goods; reputational damage arrives well before any legal action does.",
+    "verification_source_hint": "FSSAI government registry — Government-tier evidence (PRS §5)."
+  },
+  "electronics_certification": {
+    "flag_key": "electronics_certification",
+    "label": "BIS / Electronics Certification",
+    "description": "Applies to electronic and electrical accessories sold in India.",
+    "applies_when": "The category is Electronics Accessories, or the material is electronic.",
+    "required_action": "Verify BIS registration (CRS scheme) for the applicable electronics category before sourcing at volume.",
+    "penalty_risk_notes": "Non-compliant electronics can be delisted by marketplaces and are subject to regulatory seizure.",
+    "verification_source_hint": "BIS CRS government registry — Government-tier evidence (PRS §5)."
+  },
+  "textile_labeling": {
+    "flag_key": "textile_labeling",
+    "label": "Textile Labeling Requirements",
+    "description": "Applies to apparel and fabric-based products.",
+    "applies_when": "The category is Apparel & Fashion, or the material is fabric.",
+    "required_action": "Confirm fiber-content and care-label accuracy matches the garment's actual composition.",
+    "penalty_risk_notes": "Mislabeling drives return and complaint volume even where legal enforcement is lax — a real margin risk, not only a compliance one.",
+    "verification_source_hint": "Supplier-provided fabric composition certificate — Manufacturer-tier evidence (PRS §5), independently spot-checked."
+  },
+  "cosmetics_regulation": {
+    "flag_key": "cosmetics_regulation",
+    "label": "Cosmetics / CDSCO Compliance",
+    "description": "Applies to formulated beauty and personal care products.",
+    "applies_when": "The category is Beauty & Personal Care and the product is a formulated item, not just an applicator or tool.",
+    "required_action": "Confirm CDSCO cosmetic registration and ingredient-safety documentation from the manufacturer.",
+    "penalty_risk_notes": "Formulated products carry real consumer-safety liability — one of the highest-stakes compliance flags in this catalog.",
+    "verification_source_hint": "CDSCO government registry — Government-tier evidence (PRS §5)."
+  },
+  "toy_safety": {
+    "flag_key": "toy_safety",
+    "label": "Toy Safety Certification",
+    "description": "Applies to toys and children's play products.",
+    "applies_when": "The category is Baby & Kids and the product is intended for direct child use or play.",
+    "required_action": "Confirm BIS toy safety certification, and check small-parts/choking-hazard labeling requirements for the relevant age group.",
+    "penalty_risk_notes": "Child-safety non-compliance carries the highest reputational and legal risk of any flag in this catalog.",
+    "verification_source_hint": "BIS toy safety registry — Government-tier evidence (PRS §5)."
+  },
+  "import_restricted": {
+    "flag_key": "import_restricted",
+    "label": "Import Restriction Risk",
+    "description": "Applies to internationally sourced products in categories with known import-control history.",
+    "applies_when": "The country of origin is outside India and the category (notably electronics) has a history of import licensing or restriction.",
+    "required_action": "Check the current DGFT import policy for the specific HSN code before committing to an international supplier.",
+    "penalty_risk_notes": "Customs seizure and shipment-delay risk if the HSN/category is currently restricted or requires a license not yet obtained.",
+    "verification_source_hint": "DGFT government policy notification — Government-tier evidence (PRS §5)."
+  },
+  "weights_measures_declaration": {
+    "flag_key": "weights_measures_declaration",
+    "label": "Legal Metrology (Weights & Measures) Declaration",
+    "description": "Applies to any pre-packaged product sold by count, weight, or volume.",
+    "applies_when": "The product is pre-packaged and sold with a declared quantity — true of most physical goods.",
+    "required_action": "Confirm the package declares MRP, net quantity, date of manufacture, and manufacturer/packer/importer details as required by the Legal Metrology (Packaged Commodities) Rules.",
+    "penalty_risk_notes": "A common, easy-to-overlook compliance gap — marketplaces are increasingly enforcing this at listing time.",
+    "verification_source_hint": "Legal Metrology Rules — Government-tier evidence (PRS §5)."
+  },
+  "gst_standard": {
+    "flag_key": "gst_standard",
+    "label": "Standard GST Classification",
+    "description": "A general reminder that the GST slab is category/HSN-dependent, not a fixed universal rate.",
+    "applies_when": "Always — every product needs a confirmed HSN-linked GST rate before pricing is finalized.",
+    "required_action": "Confirm the exact HSN code and its current GST slab — do not assume the category's 'typical' rate applies to this specific product.",
+    "penalty_risk_notes": "Incorrect GST classification affects both pricing accuracy and compliance exposure.",
+    "verification_source_hint": "GST portal HSN lookup — Government-tier evidence (PRS §5)."
+  },
+  "hsn_required": {
+    "flag_key": "hsn_required",
+    "label": "HSN Code Required for Listing",
+    "description": "Most marketplaces require a valid HSN code at listing time for tax-invoice generation.",
+    "applies_when": "Always, before listing on any GST-registered marketplace.",
+    "required_action": "Obtain the correct HSN code — not a guessed or approximate one — before finalizing the listing.",
+    "penalty_risk_notes": "An incorrect HSN code can misclassify GST liability and cause invoice-reconciliation issues later.",
+    "verification_source_hint": "GST portal HSN lookup — Government-tier evidence (PRS §5)."
+  }
+}

@@ -1,0 +1,229 @@
+{
+  "Kitchen & Dining": {
+    "category": "Kitchen & Dining",
+    "typical_demand_pattern": "steady_year_round",
+    "typical_competition_level": "high",
+    "typical_margin_band_pct": [15, 35],
+    "typical_return_rate_pct": 4,
+    "typical_rto_rate_pct": 8,
+    "typical_gst_pct": 12,
+    "common_materials": ["metal", "glass", "ceramic", "plastic", "wood"],
+    "common_compliance_flags": ["food_safety", "weights_measures_declaration"],
+    "seasonality_notes": "Mild festive uplift around Diwali gifting season; otherwise steady year-round demand.",
+    "brand_potential_notes": "Moderate — repeat purchase is common for consumable/replaceable items (storage, cookware sets), but standalone items commoditize quickly.",
+    "research_focus_notes": [
+      "Check food-grade certification claims before trusting them",
+      "Compare against steel/glass alternatives for real differentiation",
+      "Verify capacity/dimension claims match the product photos"
+    ],
+    "source_hint": "Curated domain reference — PRS §6-§11 category pattern library"
+  },
+  "Home Organization": {
+    "category": "Home Organization",
+    "typical_demand_pattern": "steady_year_round",
+    "typical_competition_level": "high",
+    "typical_margin_band_pct": [20, 40],
+    "typical_return_rate_pct": 5,
+    "typical_rto_rate_pct": 10,
+    "typical_gst_pct": 18,
+    "common_materials": ["plastic", "fabric", "metal", "wood"],
+    "common_compliance_flags": ["weights_measures_declaration"],
+    "seasonality_notes": "New Year and pre-festive decluttering spikes are the main seasonal signal.",
+    "brand_potential_notes": "Low-moderate — highly commoditized; differentiation mostly comes from design/modularity, not brand loyalty.",
+    "research_focus_notes": [
+      "Check for genuine modular/bundle potential",
+      "Review competitor complaint patterns for durability, not just price",
+      "Confirm real usable capacity against advertised capacity"
+    ],
+    "source_hint": "Curated domain reference — PRS §6-§11 category pattern library"
+  },
+  "Fitness & Sports": {
+    "category": "Fitness & Sports",
+    "typical_demand_pattern": "seasonal_peak",
+    "typical_competition_level": "high",
+    "typical_margin_band_pct": [25, 45],
+    "typical_return_rate_pct": 6,
+    "typical_rto_rate_pct": 9,
+    "typical_gst_pct": 12,
+    "common_materials": ["rubber", "fabric", "metal", "plastic"],
+    "common_compliance_flags": [],
+    "seasonality_notes": "Strong January (New Year resolution) spike and a secondary pre-summer uplift.",
+    "brand_potential_notes": "High — fitness supports genuine repeat purchase and community/brand loyalty when quality is consistent.",
+    "research_focus_notes": [
+      "Verify grip/anti-slip and material-quality claims are substantiated, not just marketing copy",
+      "Compare weight-bearing and durability claims against real complaint patterns",
+      "Consider the influencer/community marketing angle when assessing brand potential"
+    ],
+    "source_hint": "Curated domain reference — PRS §6-§11 category pattern library"
+  },
+  "Electronics Accessories": {
+    "category": "Electronics Accessories",
+    "typical_demand_pattern": "steady_year_round",
+    "typical_competition_level": "saturated",
+    "typical_margin_band_pct": [10, 25],
+    "typical_return_rate_pct": 10,
+    "typical_rto_rate_pct": 14,
+    "typical_gst_pct": 18,
+    "common_materials": ["plastic", "metal", "electronic"],
+    "common_compliance_flags": ["electronics_certification", "import_restricted"],
+    "seasonality_notes": "Strong Diwali and Republic Day sale-event spikes; otherwise steady.",
+    "brand_potential_notes": "Low — extremely price-sensitive and commoditized; brand defensibility is hard to sustain here.",
+    "research_focus_notes": [
+      "Verify BIS/CRS certification claims independently",
+      "Check compatibility claims against the specific device models advertised",
+      "Watch for counterfeit/trademark risk on accessories resembling known branded products"
+    ],
+    "source_hint": "Curated domain reference — PRS §6-§11 category pattern library"
+  },
+  "Apparel & Fashion": {
+    "category": "Apparel & Fashion",
+    "typical_demand_pattern": "seasonal_peak",
+    "typical_competition_level": "saturated",
+    "typical_margin_band_pct": [30, 55],
+    "typical_return_rate_pct": 18,
+    "typical_rto_rate_pct": 20,
+    "typical_gst_pct": 5,
+    "common_materials": ["fabric", "leather"],
+    "common_compliance_flags": ["textile_labeling"],
+    "seasonality_notes": "Strong seasonal-collection cycles; wedding and festive seasons drive sharp demand spikes.",
+    "brand_potential_notes": "High — one of the strongest repeat-purchase and brand-loyalty categories when fit and quality are consistent.",
+    "research_focus_notes": [
+      "Size-chart accuracy is the single biggest return driver — verify it carefully against actual garment measurements",
+      "Check fabric composition claims against the supplier's certificate",
+      "Review fit/true-to-size complaints specifically, not just overall star rating"
+    ],
+    "source_hint": "Curated domain reference — PRS §6-§11 category pattern library. GST note: 5% typically applies below ₹1000, 12% above — confirm the current threshold and HSN before pricing."
+  },
+  "Beauty & Personal Care": {
+    "category": "Beauty & Personal Care",
+    "typical_demand_pattern": "steady_year_round",
+    "typical_competition_level": "high",
+    "typical_margin_band_pct": [35, 60],
+    "typical_return_rate_pct": 5,
+    "typical_rto_rate_pct": 8,
+    "typical_gst_pct": 18,
+    "common_materials": ["plastic"],
+    "common_compliance_flags": ["cosmetics_regulation"],
+    "seasonality_notes": "Festive gifting spikes around Diwali and Rakhi.",
+    "brand_potential_notes": "Very high — strong repeat purchase and a natural fit for private label if formulation quality holds.",
+    "research_focus_notes": [
+      "Verify CDSCO compliance for any formulated (not just applicator/tool) product",
+      "Check ingredient-list transparency against the supplier certificate",
+      "Read review text for allergy/patch-test complaints — don't rely on the aggregate star rating alone"
+    ],
+    "source_hint": "Curated domain reference — PRS §6-§11 category pattern library"
+  },
+  "Baby & Kids": {
+    "category": "Baby & Kids",
+    "typical_demand_pattern": "steady_year_round",
+    "typical_competition_level": "medium",
+    "typical_margin_band_pct": [25, 45],
+    "typical_return_rate_pct": 7,
+    "typical_rto_rate_pct": 11,
+    "typical_gst_pct": 12,
+    "common_materials": ["plastic", "fabric", "wood"],
+    "common_compliance_flags": ["toy_safety", "food_safety"],
+    "seasonality_notes": "Birthday and gifting spikes; back-to-school uplift for kids' items specifically.",
+    "brand_potential_notes": "High — parents skew strongly brand-loyal once safety and quality trust is established.",
+    "research_focus_notes": [
+      "Toy safety / BIS certification is non-negotiable — verify before sourcing at any volume",
+      "Check small-parts/choking-hazard labeling requirements by age group",
+      "Read safety-related complaints in full — a single credible safety complaint outweighs many unrelated positive reviews"
+    ],
+    "source_hint": "Curated domain reference — PRS §6-§11 category pattern library"
+  },
+  "Pet Supplies": {
+    "category": "Pet Supplies",
+    "typical_demand_pattern": "emerging",
+    "typical_competition_level": "medium",
+    "typical_margin_band_pct": [30, 50],
+    "typical_return_rate_pct": 4,
+    "typical_rto_rate_pct": 9,
+    "typical_gst_pct": 18,
+    "common_materials": ["plastic", "fabric", "metal"],
+    "common_compliance_flags": [],
+    "seasonality_notes": "Steady demand with a mild festive-gifting uplift.",
+    "brand_potential_notes": "High — pet owners are highly brand-loyal once quality/safety trust is built, with strong repeat purchase on consumables.",
+    "research_focus_notes": [
+      "This category is still maturing in the Indian market — evidence is structurally thinner, so weight demand confidence accordingly (PRS §6)",
+      "Check size/breed-fit claims carefully",
+      "Review durability complaints closely for chew-prone or wear-prone items"
+    ],
+    "source_hint": "Curated domain reference — PRS §6-§11 category pattern library"
+  },
+  "Stationery & Office": {
+    "category": "Stationery & Office",
+    "typical_demand_pattern": "seasonal_peak",
+    "typical_competition_level": "high",
+    "typical_margin_band_pct": [20, 35],
+    "typical_return_rate_pct": 3,
+    "typical_rto_rate_pct": 6,
+    "typical_gst_pct": 12,
+    "common_materials": ["paper", "plastic", "metal"],
+    "common_compliance_flags": [],
+    "seasonality_notes": "Strong June-July school-reopening spike and a secondary January new-year-planner spike.",
+    "brand_potential_notes": "Low-moderate — largely functional purchases, though the premium/planner segment supports some brand loyalty.",
+    "research_focus_notes": [
+      "Time launch to the school-reopening or new-year window for maximum demand",
+      "Check paper-quality/GSM claims where relevant",
+      "Watch for low differentiation — this is a genuinely commodity-risk category"
+    ],
+    "source_hint": "Curated domain reference — PRS §6-§11 category pattern library"
+  },
+  "Outdoor & Garden": {
+    "category": "Outdoor & Garden",
+    "typical_demand_pattern": "seasonal_peak",
+    "typical_competition_level": "low",
+    "typical_margin_band_pct": [25, 45],
+    "typical_return_rate_pct": 5,
+    "typical_rto_rate_pct": 10,
+    "typical_gst_pct": 18,
+    "common_materials": ["plastic", "metal", "wood"],
+    "common_compliance_flags": [],
+    "seasonality_notes": "Pre-monsoon and pre-summer spikes; demand is more regionally variable than most categories.",
+    "brand_potential_notes": "Moderate — a comparatively less-saturated category with real differentiation opportunity for a focused brand.",
+    "research_focus_notes": [
+      "Category is less saturated in Indian ecommerce — double-check that low competition isn't actually just thin evidence (PRS §6)",
+      "Check weather/UV-resistance claims",
+      "Regional demand may vary more than national aggregates suggest — avoid over-generalizing from a single marketplace view"
+    ],
+    "source_hint": "Curated domain reference — PRS §6-§11 category pattern library"
+  },
+  "Home Decor": {
+    "category": "Home Decor",
+    "typical_demand_pattern": "steady_year_round",
+    "typical_competition_level": "high",
+    "typical_margin_band_pct": [30, 55],
+    "typical_return_rate_pct": 6,
+    "typical_rto_rate_pct": 10,
+    "typical_gst_pct": 12,
+    "common_materials": ["ceramic", "glass", "wood", "metal", "fabric"],
+    "common_compliance_flags": [],
+    "seasonality_notes": "Strong Diwali and wedding-season demand spikes.",
+    "brand_potential_notes": "High — decor is aesthetic-driven and supports a genuine brand story and differentiation.",
+    "research_focus_notes": [
+      "Listing photography/presentation quality strongly affects conversion — benchmark against top competitor listings",
+      "Check breakage complaint rate closely — fragile materials are common in this category",
+      "Festive timing is a major demand lever — plan launch timing accordingly"
+    ],
+    "source_hint": "Curated domain reference — PRS §6-§11 category pattern library"
+  },
+  "Uncategorized": {
+    "category": "Uncategorized",
+    "typical_demand_pattern": "unknown",
+    "typical_competition_level": "unknown",
+    "typical_margin_band_pct": [15, 35],
+    "typical_return_rate_pct": 6,
+    "typical_rto_rate_pct": 10,
+    "typical_gst_pct": 18,
+    "common_materials": [],
+    "common_compliance_flags": ["gst_standard", "hsn_required"],
+    "seasonality_notes": "No category-specific pattern is known — treat any seasonality assumption as unverified.",
+    "brand_potential_notes": "Unknown — no category-level pattern is available for a product that couldn't be classified.",
+    "research_focus_notes": [
+      "Category could not be automatically detected — confirm it manually before trusting any other figure in this Knowledge Pack",
+      "Provide an explicit category hint during Data Collection to get real category-level guidance instead of this generic fallback"
+    ],
+    "source_hint": "Generic fallback entry — no category-specific data available (PRS §17: never presented as if it were category-specific)."
+  }
+}

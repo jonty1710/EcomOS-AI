@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: ecomos-ai-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        value: '["https://your-frontend.vercel.app"]'
+      - key: ENVIRONMENT
+        value: production

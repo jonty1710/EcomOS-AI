@@ -1,0 +1,63 @@
+{
+  "indiamart": {
+    "platform": "indiamart",
+    "typical_moq_notes": "MOQ varies hugely by seller tier — even verified/TrustSEAL suppliers often quote a high opening MOQ that is frequently negotiable downward for a first order.",
+    "typical_lead_time_days_band": [7, 30],
+    "verification_red_flags": [
+      "No independently verifiable business registration or GST number",
+      "Refuses to provide a sample before a bulk order",
+      "Pricing significantly below the category norm with no clear explanation",
+      "Only accepts full advance payment with no partial-payment option"
+    ],
+    "verification_best_practices": [
+      "Cross-check the GST number independently — don't rely on a listing badge alone",
+      "Always obtain at least one physical sample before committing to MOQ",
+      "Get pricing in writing across at least two order-size tiers to check for consistency"
+    ],
+    "negotiation_notes": "Opening quotes on IndiaMART are frequently negotiable 10-20% down, especially once a genuine repeat-order relationship is established."
+  },
+  "tradeindia": {
+    "platform": "tradeindia",
+    "typical_moq_notes": "A similar profile to IndiaMART, but the seller base skews slightly more toward manufacturers with export experience, sometimes with higher minimums.",
+    "typical_lead_time_days_band": [10, 35],
+    "verification_red_flags": [
+      "No independently verifiable business registration or GST number",
+      "Refuses to provide a sample before a bulk order",
+      "Communication only through personal chat apps, with no business email or domain"
+    ],
+    "verification_best_practices": [
+      "Verify export/trade history independently if it's claimed in the listing",
+      "Request references from prior buyers where feasible",
+      "Confirm Incoterms (who pays freight/insurance) in writing before ordering"
+    ],
+    "negotiation_notes": "Sellers with genuine export experience are often more receptive to a formal Proforma Invoice negotiation than informal chat-based haggling."
+  },
+  "manufacturer_direct": {
+    "platform": "manufacturer_direct",
+    "typical_moq_notes": "Usually the highest MOQ of any sourcing channel, but the best achievable per-unit pricing and the most control over customization.",
+    "typical_lead_time_days_band": [15, 45],
+    "verification_red_flags": [
+      "Unwilling to allow a factory audit or even a video call",
+      "No formal quality-control process can be described when asked"
+    ],
+    "verification_best_practices": [
+      "Request a pre-shipment inspection report, or arrange independent third-party QC",
+      "Clarify tooling/mold costs upfront if any customization is involved"
+    ],
+    "negotiation_notes": "Direct manufacturer relationships reward volume commitment — per-unit pricing tiers often improve meaningfully above certain order thresholds."
+  },
+  "wholesaler": {
+    "platform": "wholesaler",
+    "typical_moq_notes": "Lower MOQ than going direct to a manufacturer, at a higher per-unit price — a reasonable way to market-test before committing to a manufacturer relationship.",
+    "typical_lead_time_days_band": [3, 14],
+    "verification_red_flags": [
+      "Cannot identify the original manufacturer at all",
+      "Pricing is barely below retail, leaving little real margin to work with"
+    ],
+    "verification_best_practices": [
+      "Use wholesalers for initial market-testing, not as the long-term primary source once volume justifies going direct",
+      "Confirm stock availability in real time — wholesaler inventory is typically shared across many buyers simultaneously"
+    ],
+    "negotiation_notes": "Less price flexibility than a manufacturer relationship, but materially faster fulfillment — treat this as a speed/flexibility trade-off, not a cost play."
+  }
+}
