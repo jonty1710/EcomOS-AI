@@ -23,11 +23,13 @@ create table if not exists public.sessions (
 create table if not exists public.products (
   id uuid primary key default gen_random_uuid(),
   product_name text not null,
-  normalized_name text not null,
+  normalized_name text not null unique,               -- unique, not just indexed (Phase 4 fix — required
+                                                        -- for the backend's upsert(...on_conflict="normalized_name")
+                                                        -- to work at all; PostgREST needs a real unique
+                                                        -- constraint to match against, an index alone isn't enough)
   category text,
   created_at timestamptz not null default now()
 );
-create index if not exists idx_products_normalized_name on public.products (normalized_name);
 
 -- Research history: one row per analysis run. Never overwritten.
 create table if not exists public.reports (
@@ -291,3 +293,12 @@ alter table public.reports add column if not exists recommendation_explanation t
 alter table public.reports add column if not exists manual_verification_checklist jsonb not null default '[]';
 alter table public.reports add column if not exists knowledge_pack jsonb;
 alter table public.module_results add column if not exists unavailable_reason text;
+
+-- products.normalized_name needs a real UNIQUE constraint, not just an index,
+-- for upsert(...on_conflict="normalized_name") to work (discovered live —
+-- PostgREST error 42P10 "no unique or exclusion constraint matching the
+-- ON CONFLICT specification"). Safe to run even if a handful of test rows
+-- already exist, as long as none of them share a normalized_name.
+drop index if exists public.idx_products_normalized_name;
+alter table public.products drop constraint if exists products_normalized_name_key;
+alter table public.products add constraint products_normalized_name_key unique (normalized_name);
