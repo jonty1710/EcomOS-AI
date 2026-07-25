@@ -2,8 +2,18 @@
 (existing profile persistence) with the new provenance event repository.
 Both singletons are reset to fresh, isolated, tmp-path-backed instances per
 test so this never touches the real backend/data/*.json files.
+
+Also forces SUPABASE_URL/SUPABASE_SERVICE_ROLE_KEY empty for the duration of
+each test: if a developer has a local `.env` with real Supabase credentials
+(needed to run the app against a real project), `get_settings()` would
+otherwise pick them up here too and route these tests at the real
+Supabase-backed repository instead of the JSON fallback they're designed to
+exercise — env vars take precedence over `.env` in pydantic-settings, so
+setting them empty here reliably forces the JSON path regardless of what's
+on disk locally.
 """
 
+import app.core.config as config_module
 import app.db.profile_repository as profile_repository_module
 import app.db.provenance_repository as provenance_repository_module
 from app.services import profile_service, provenance_service
@@ -14,6 +24,9 @@ def _isolate(tmp_path, monkeypatch):
     monkeypatch.setattr(profile_repository_module, "_profile_repository_instance", None)
     monkeypatch.setattr(provenance_repository_module, "PROVENANCE_EVENTS_FILE", tmp_path / "provenance_events.json")
     monkeypatch.setattr(provenance_repository_module, "_provenance_event_repository_instance", None)
+    monkeypatch.setenv("SUPABASE_URL", "")
+    monkeypatch.setenv("SUPABASE_SERVICE_ROLE_KEY", "")
+    config_module.get_settings.cache_clear()
 
 
 def _make_profile():

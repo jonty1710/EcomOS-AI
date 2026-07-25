@@ -114,11 +114,7 @@ class JsonFileProfileRepository:
 
 
 class SupabaseProfileRepository:
-    """Maps to the `product_profiles` table (database/schema.sql). Same
-    honesty pattern as SupabaseReportRepository (app/db/repository.py): the
-    write path is implemented; full relational read-path reassembly is
-    deferred to when a real Supabase project is available to test against.
-    """
+    """Maps to the `product_profiles` table (database/schema.sql)."""
 
     def __init__(self) -> None:
         from supabase import Client, create_client
@@ -147,12 +143,30 @@ class SupabaseProfileRepository:
             }
         ).execute()
 
-    def get_profile(self, profile_id: str) -> ProductProfile | None:
-        raise NotImplementedError(
-            "SupabaseProfileRepository.get_profile: full reassembly pending a provisioned "
-            "Supabase project to test against — same known gap as SupabaseReportRepository "
-            "(app/db/repository.py). The JSON fallback repository is complete."
+    def _row_to_profile(self, row: dict) -> ProductProfile:
+        return ProductProfile(
+            id=row["id"],
+            session_id=row.get("session_id") or "",
+            product_name=row["product_name"],
+            source_url=row.get("source_url"),
+            detected_marketplace=row.get("detected_marketplace"),
+            version=row["version"],
+            previous_version_id=row.get("previous_version_id"),
+            fields=row.get("fields") or {},
+            cost_structure=row.get("cost_structure") or {},
+            data_quality=row["data_quality"],
+            missing_required=row.get("missing_required") or [],
+            missing_optional=row.get("missing_optional") or [],
+            ready_for_research=row.get("ready_for_research", False),
+            created_at=row["created_at"],
+            updated_at=row["updated_at"],
         )
+
+    def get_profile(self, profile_id: str) -> ProductProfile | None:
+        row = self._client.table("product_profiles").select("*").eq("id", profile_id).maybe_single().execute()
+        if not row or not row.data:
+            return None
+        return self._row_to_profile(row.data)
 
     def list_profiles(self, session_id: str | None = None) -> list[ProductProfileSummary]:
         query = self._client.table("product_profiles").select("*")
@@ -172,7 +186,29 @@ class SupabaseProfileRepository:
         ]
 
     def list_versions(self, profile_id: str) -> list[ProductProfileSummary]:
-        raise NotImplementedError("See get_profile note above.")
+        """Walks the previous_version_id chain backward via repeated point
+        queries — same approach as JsonFileProfileRepository.list_versions,
+        just against Supabase instead of the in-memory dict.
+        """
+        chain: list[ProductProfile] = []
+        seen: set[str] = set()
+        current_id: str | None = profile_id
+        while current_id and current_id not in seen:
+            seen.add(current_id)
+            profile = self.get_profile(current_id)
+            if profile is None:
+                break
+            chain.append(profile)
+            current_id = profile.previous_version_id
+        return [
+            ProductProfileSummary(
+                id=p.id, product_name=p.product_name, version=p.version,
+                completeness_pct=p.data_quality.completeness_pct,
+                ready_for_research=p.ready_for_research,
+                created_at=p.created_at, updated_at=p.updated_at,
+            )
+            for p in chain
+        ]
 
     def delete_profile(self, profile_id: str) -> bool:
         result = self._client.table("product_profiles").delete().eq("id", profile_id).execute()

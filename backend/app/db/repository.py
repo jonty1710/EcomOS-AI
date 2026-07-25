@@ -21,7 +21,8 @@ from pathlib import Path
 from typing import Protocol
 
 from app.core.config import get_settings
-from app.models.schemas import ReportResponse, ReportSummary
+from app.models.schemas import ModuleSection, ReportResponse, ReportSummary
+from app.scoring.decision import DIMENSION_LABELS, DIMENSION_WEIGHTS
 
 DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
 DB_FILE = DATA_DIR / "db.json"
@@ -139,11 +140,17 @@ class SupabaseReportRepository:
                 "id": report.id,
                 "session_id": session_id,
                 "product_id": product_id,
+                "product_name": report.product_name,
+                "category": report.category,
                 "status": report.status,
                 "research_mode": report.research_mode,
                 "overall_score": report.overall_score,
                 "risk_level": report.risk_level,
                 "recommendation": report.recommendation,
+                "research_completeness_pct": report.research_completeness_pct,
+                "recommendation_explanation": report.recommendation_explanation,
+                "manual_verification_checklist": report.manual_verification_checklist,
+                "knowledge_pack": json.loads(report.knowledge_pack.model_dump_json()) if report.knowledge_pack else None,
                 "is_saved": report.is_saved,
                 "created_at": report.created_at.isoformat(),
                 "completed_at": report.completed_at.isoformat() if report.completed_at else None,
@@ -164,23 +171,54 @@ class SupabaseReportRepository:
                     "sub_score": section.sub_score,
                     "sources": [s.model_dump(mode="json") for s in section.sources],
                     "requires_manual_verification": section.requires_manual_verification,
+                    "unavailable_reason": section.unavailable_reason,
                 }
             ).execute()
 
+    def _row_to_report(self, row: dict, module_rows: list[dict]) -> ReportResponse:
+        sections = [
+            ModuleSection(
+                agent_type=m["agent_type"],
+                label=DIMENSION_LABELS.get(m["agent_type"], m["agent_type"]),
+                status=m["status"],
+                data=m.get("data") or {},
+                signals=m.get("signals") or {},
+                reasoning=m.get("reasoning"),
+                confidence_score=m.get("confidence_score"),
+                evidence_score=m.get("evidence_score"),
+                sub_score=m.get("sub_score"),
+                sources=m.get("sources") or [],
+                requires_manual_verification=m.get("requires_manual_verification", False),
+                weight_in_decision_engine=DIMENSION_WEIGHTS.get(m["agent_type"], 0),
+                unavailable_reason=m.get("unavailable_reason"),
+            )
+            for m in module_rows
+        ]
+        return ReportResponse(
+            id=row["id"],
+            product_name=row.get("product_name") or "",
+            category=row.get("category"),
+            status=row["status"],
+            research_mode=row.get("research_mode", "manual"),
+            overall_score=row.get("overall_score"),
+            risk_level=row.get("risk_level"),
+            recommendation=row.get("recommendation"),
+            is_saved=row.get("is_saved", False),
+            sections=sections,
+            manual_verification_checklist=row.get("manual_verification_checklist") or [],
+            research_completeness_pct=row.get("research_completeness_pct") or 0.0,
+            recommendation_explanation=row.get("recommendation_explanation") or "",
+            knowledge_pack=row.get("knowledge_pack"),
+            created_at=datetime.fromisoformat(row["created_at"]),
+            completed_at=datetime.fromisoformat(row["completed_at"]) if row.get("completed_at") else None,
+        )
+
     def get_report(self, report_id: str) -> ReportResponse | None:
         report_row = self._client.table("reports").select("*").eq("id", report_id).maybe_single().execute()
-        if not report_row.data:
+        if not report_row or not report_row.data:
             return None
         modules = self._client.table("module_results").select("*").eq("report_id", report_id).execute()
-        # Reassembly into ReportResponse omitted for brevity in Phase 1 — the JSON
-        # fallback repository is what Phase 1's UI is validated against; wiring the
-        # Supabase read path fully is tracked for the first milestone that has a
-        # provisioned Supabase project to test against (see README "Known Gaps").
-        raise NotImplementedError(
-            "SupabaseReportRepository.get_report: full reassembly pending a provisioned "
-            "Supabase project to test against. Configure without SUPABASE_URL for the "
-            "JSON fallback, which is complete."
-        )
+        return self._row_to_report(report_row.data, modules.data)
 
     def list_reports(self, session_id: str | None = None, saved_only: bool = False) -> list[ReportSummary]:
         query = self._client.table("reports").select("*")
@@ -192,7 +230,7 @@ class SupabaseReportRepository:
         return [
             ReportSummary(
                 id=r["id"],
-                product_name=r.get("product_name", ""),
+                product_name=r.get("product_name") or "",
                 category=r.get("category"),
                 status=r["status"],
                 overall_score=r.get("overall_score"),
@@ -208,7 +246,13 @@ class SupabaseReportRepository:
         return bool(result.data)
 
     def toggle_favorite(self, report_id: str) -> ReportResponse | None:
-        raise NotImplementedError("See get_report note above.")
+        report = self.get_report(report_id)
+        if report is None:
+            return None
+        new_value = not report.is_saved
+        self._client.table("reports").update({"is_saved": new_value}).eq("id", report_id).execute()
+        report.is_saved = new_value
+        return report
 
 
 _repository_instance: ReportRepository | None = None

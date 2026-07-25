@@ -34,11 +34,17 @@ create table if not exists public.reports (
   id uuid primary key default gen_random_uuid(),
   session_id uuid references public.sessions(id) on delete set null,
   product_id uuid references public.products(id) on delete cascade,
+  product_name text,                                -- denormalized from products, avoids a join for list/get (Phase 4 fix)
+  category text,                                     -- denormalized from products (Phase 4 fix)
   status text not null default 'pending',          -- pending|running|partial|completed|failed|insufficient_data
   research_mode text not null default 'manual',     -- manual|ai (Phase 1 is manual-only)
   overall_score numeric(5,2),
   risk_level text,
   recommendation text,
+  research_completeness_pct numeric(5,2),            -- PRS §16 (Phase 4 fix — was missing from Phase 1 schema)
+  recommendation_explanation text,                    -- PRS §13 Decision Record (Phase 4 fix)
+  manual_verification_checklist jsonb not null default '[]',
+  knowledge_pack jsonb,                                -- Phase 3 KnowledgePack snapshot (Phase 4 fix)
   is_saved boolean not null default false,
   served_from_cache boolean not null default false,
   prompt_bundle jsonb,
@@ -82,6 +88,7 @@ create table if not exists public.module_results (
   sub_score numeric(5,2),
   sources jsonb not null default '[]',
   requires_manual_verification boolean not null default false,
+  unavailable_reason text,                            -- Phase 4 fix — was missing, needed to reassemble a ModuleSection
   prompt_id uuid references public.prompts(id),
   latency_ms integer,
   token_usage jsonb,
@@ -272,3 +279,15 @@ create table if not exists public.field_audit_events (
   created_at timestamptz not null default now()
 );
 create index if not exists idx_field_audit_events_profile on public.field_audit_events (profile_id, created_at);
+
+-- Phase 4 migration block — additive, idempotent, safe to re-run against a
+-- database that was created before these columns existed (the `create table`
+-- statements above already include them for a fresh install; this block is
+-- what actually updates an already-provisioned project).
+alter table public.reports add column if not exists product_name text;
+alter table public.reports add column if not exists category text;
+alter table public.reports add column if not exists research_completeness_pct numeric(5,2);
+alter table public.reports add column if not exists recommendation_explanation text;
+alter table public.reports add column if not exists manual_verification_checklist jsonb not null default '[]';
+alter table public.reports add column if not exists knowledge_pack jsonb;
+alter table public.module_results add column if not exists unavailable_reason text;
