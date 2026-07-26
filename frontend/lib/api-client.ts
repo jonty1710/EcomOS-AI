@@ -25,15 +25,43 @@ export class ApiRequestError extends Error {
   }
 }
 
+// Render's free tier spins the backend down after ~15 min idle. The FIRST
+// request that wakes it can fail outright at the network level (connection
+// refused — nothing was listening yet) before the container finishes
+// booting, even though a retry moments later succeeds. Retrying a few times
+// with backoff here means the user never sees that transient failure —
+// only a genuine, repeated failure surfaces as an error.
+const WAKE_UP_RETRY_DELAYS_MS = [3000, 6000, 10000];
+
+async function fetchWithWakeUpRetry(url: string, init: RequestInit): Promise<Response> {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await fetch(url, init);
+    } catch (networkError) {
+      if (attempt >= WAKE_UP_RETRY_DELAYS_MS.length) throw networkError;
+      await new Promise((resolve) => setTimeout(resolve, WAKE_UP_RETRY_DELAYS_MS[attempt]));
+    }
+  }
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE_URL}${path}`, {
-    ...init,
-    headers: {
-      "Content-Type": "application/json",
-      "X-Session-Id": getSessionId(),
-      ...init?.headers,
-    },
-  });
+  let res: Response;
+  try {
+    res = await fetchWithWakeUpRetry(`${API_BASE_URL}${path}`, {
+      ...init,
+      headers: {
+        "Content-Type": "application/json",
+        "X-Session-Id": getSessionId(),
+        ...init?.headers,
+      },
+    });
+  } catch {
+    throw new ApiRequestError(
+      0,
+      "NETWORK_ERROR",
+      "Could not reach the server after several attempts. Please check your connection and try again.",
+    );
+  }
 
   if (!res.ok) {
     let body: ApiError | null = null;
