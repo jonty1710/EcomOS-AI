@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DynamicField } from "@/components/collection/dynamic-field";
+import type { ExperienceMode } from "@/lib/field-modes";
 import type { FieldDefinition, FieldValue } from "@/lib/types";
 
 export function SectionCard({
@@ -9,6 +10,7 @@ export function SectionCard({
   fieldStates,
   onChange,
   onVerifiedChange,
+  mode,
 }: {
   section: string;
   fields: FieldDefinition[];
@@ -16,6 +18,7 @@ export function SectionCard({
   fieldStates: Record<string, FieldValue>;
   onChange: (key: string, value: unknown) => void;
   onVerifiedChange: (key: string, verified: boolean) => void;
+  mode: ExperienceMode;
 }) {
   return (
     <Card>
@@ -31,6 +34,7 @@ export function SectionCard({
             rawValue={values[definition.key]}
             onChange={onChange}
             onVerifiedChange={onVerifiedChange}
+            mode={mode}
           />
         ))}
       </CardContent>

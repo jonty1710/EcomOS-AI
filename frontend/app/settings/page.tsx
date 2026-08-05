@@ -6,6 +6,7 @@ import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { ModeSelector } from "@/components/collection/mode-selector";
 
 export default function SettingsPage() {
   const [sessionId, setSessionId] = useState<string>("");
@@ -26,6 +27,18 @@ export default function SettingsPage() {
         <h1 className="text-xl font-semibold">Settings</h1>
         <p className="text-sm text-muted-foreground">The minimum controls an anonymous-session product needs.</p>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-sm">Experience Mode</CardTitle>
+          <CardDescription>
+            Controls how much detail Data Collection and the sidebar show you. Change this anytime.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ModeSelector />
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>

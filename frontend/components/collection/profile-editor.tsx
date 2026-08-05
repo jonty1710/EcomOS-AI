@@ -12,6 +12,9 @@ import { Label } from "@/components/ui/label";
 import { SectionCard } from "@/components/collection/section-card";
 import { QualityScorePanel } from "@/components/collection/quality-score-panel";
 import { MissingFieldsPanel } from "@/components/collection/missing-fields-panel";
+import { ModeSelector } from "@/components/collection/mode-selector";
+import { useExperienceMode } from "@/lib/experience-mode";
+import { getVisibleFields } from "@/lib/field-modes";
 import { api, ApiRequestError } from "@/lib/api-client";
 import type { FieldDefinition, FieldRegistryResponse, ProductProfile, ProductProfileSummary } from "@/lib/types";
 
@@ -23,6 +26,7 @@ export function ProfileEditor({
   initialProfile: ProductProfile | null;
 }) {
   const router = useRouter();
+  const { mode } = useExperienceMode();
   const [values, setValues] = useState<Record<string, unknown>>(() => {
     const initial: Record<string, unknown> = {};
     if (initialProfile) {
@@ -122,21 +126,36 @@ export function ProfileEditor({
     }
   }
 
+  // Progressive disclosure: only the fields this mode asks for ever reach
+  // the form below — Beginner/Professional never even mount the hidden
+  // fields' inputs, they're not just visually collapsed.
+  const visibleFields = useMemo(() => getVisibleFields(mode, fieldRegistry.fields), [mode, fieldRegistry.fields]);
+  const visibleKeySet = useMemo(() => new Set(visibleFields.map((f) => f.key)), [visibleFields]);
+
   const fieldsBySection = useMemo(() => {
     const map: Record<string, FieldDefinition[]> = {};
     for (const section of fieldRegistry.sections) map[section] = [];
-    for (const f of fieldRegistry.fields) map[f.section]?.push(f);
+    for (const f of visibleFields) map[f.section]?.push(f);
     return map;
-  }, [fieldRegistry]);
+  }, [fieldRegistry.sections, visibleFields]);
 
-  const fieldsByKey = useMemo(
-    () => Object.fromEntries(fieldRegistry.fields.map((f) => [f.key, f])),
-    [fieldRegistry],
-  );
+  const visibleSections = fieldRegistry.sections.filter((s) => (fieldsBySection[s]?.length ?? 0) > 0);
+
+  const fieldsByKey = useMemo(() => Object.fromEntries(visibleFields.map((f) => [f.key, f])), [visibleFields]);
+
+  // Filter the backend's missing_required/missing_optional (computed against
+  // the FULL 53-field set) down to only what this mode actually shows —
+  // never surface a "missing" badge for a field the user can't even see.
+  const visibleMissingRequired = (profile?.missing_required ?? []).filter((k) => visibleKeySet.has(k));
+  const visibleMissingOptional = (profile?.missing_optional ?? []).filter((k) => visibleKeySet.has(k));
+
+  const showAdvancedCards = mode !== "beginner";
 
   return (
     <div className="space-y-6">
-      {versions.length > 1 && (
+      <ModeSelector />
+
+      {showAdvancedCards && versions.length > 1 && (
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-1.5 text-sm">
@@ -159,39 +178,41 @@ export function ProfileEditor({
         </Card>
       )}
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm">Marketplace URL (optional)</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-1.5">
-          <Label htmlFor="source_url">Paste a product URL to record which marketplace this is from</Label>
-          <Input
-            id="source_url"
-            placeholder="https://www.amazon.in/dp/..."
-            value={sourceUrl}
-            onChange={(e) => setSourceUrl(e.target.value)}
-          />
-          {profile?.detected_marketplace && (
-            <p className="text-xs text-muted-foreground">
-              Detected: <span className="font-medium capitalize">{profile.detected_marketplace}</span> — no data is
-              fetched automatically in this phase; the fields below still need to be filled in manually.
-            </p>
-          )}
-        </CardContent>
-      </Card>
+      {showAdvancedCards && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm">Marketplace URL (optional)</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-1.5">
+            <Label htmlFor="source_url">Paste a product URL to record which marketplace this is from</Label>
+            <Input
+              id="source_url"
+              placeholder="https://www.amazon.in/dp/..."
+              value={sourceUrl}
+              onChange={(e) => setSourceUrl(e.target.value)}
+            />
+            {profile?.detected_marketplace && (
+              <p className="text-xs text-muted-foreground">
+                Detected: <span className="font-medium capitalize">{profile.detected_marketplace}</span> — no data is
+                fetched automatically in this phase; the fields below still need to be filled in manually.
+              </p>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {profile && (
         <>
-          <QualityScorePanel quality={profile.data_quality} />
+          <QualityScorePanel quality={profile.data_quality} mode={mode} />
           <MissingFieldsPanel
-            requiredKeys={profile.missing_required}
-            optionalKeys={profile.missing_optional}
+            requiredKeys={visibleMissingRequired}
+            optionalKeys={visibleMissingOptional}
             fieldsByKey={fieldsByKey}
           />
         </>
       )}
 
-      {fieldRegistry.sections.map((section) => (
+      {visibleSections.map((section) => (
         <SectionCard
           key={section}
           section={section}
@@ -200,6 +221,7 @@ export function ProfileEditor({
           fieldStates={profile?.fields ?? {}}
           onChange={handleChange}
           onVerifiedChange={handleVerifiedChange}
+          mode={mode}
         />
       ))}
 
@@ -208,17 +230,21 @@ export function ProfileEditor({
       <div className="sticky bottom-4 flex flex-col gap-3 rounded-lg border border-border bg-card p-4 shadow-lg sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
           {profile?.ready_for_research
-            ? "Ready to send to the Research Engine."
-            : "Complete the required fields to enable Send to Research."}
+            ? mode === "beginner"
+              ? "Ready to analyze!"
+              : "Ready to send to the Research Engine."
+            : mode === "beginner"
+              ? "Answer the questions above to continue."
+              : "Complete the required fields to enable Send to Research."}
         </p>
         <div className="flex gap-2">
           <Button variant="outline" onClick={handleSave} disabled={saving}>
             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-            Save Profile
+            {mode === "beginner" ? "Save" : "Save Profile"}
           </Button>
           <Button onClick={handleSendToResearch} disabled={!profile?.ready_for_research || sending}>
             {sending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-            Send to Research
+            {mode === "beginner" ? "Analyze This Product" : "Send to Research"}
           </Button>
         </div>
       </div>

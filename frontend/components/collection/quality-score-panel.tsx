@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import type { ExperienceMode } from "@/lib/field-modes";
 import type { DataQualityScore } from "@/lib/types";
 
 function barColor(pct: number, invert = false) {
@@ -27,10 +28,31 @@ function Metric({ label, pct, invert }: { label: string; pct: number; invert?: b
   );
 }
 
-// Four independent numbers, four independent questions — never collapsed
-// into one "quality" figure (same principle as Confidence vs Evidence
-// throughout this app).
-export function QualityScorePanel({ quality }: { quality: DataQualityScore }) {
+// Enterprise: four independent numbers, four independent questions — never
+// collapsed into one "quality" figure (same principle as Confidence vs
+// Evidence throughout this app). Beginner/Professional: that's four jargon
+// terms a seller doesn't need — one plain-language progress bar instead.
+export function QualityScorePanel({ quality, mode }: { quality: DataQualityScore; mode: ExperienceMode }) {
+  if (mode !== "enterprise") {
+    const pct = quality.completeness_pct;
+    return (
+      <Card>
+        <CardContent className="space-y-2 py-4">
+          <div className="flex items-center justify-between text-sm">
+            <span className="font-medium">Progress</span>
+            <span className="text-muted-foreground">{pct.toFixed(0)}% done</span>
+          </div>
+          <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
+            <div
+              className="h-full rounded-full bg-primary transition-all"
+              style={{ width: `${Math.min(100, Math.max(0, pct))}%` }}
+            />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card>
       <CardHeader>

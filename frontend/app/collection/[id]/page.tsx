@@ -9,11 +9,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProfileEditor } from "@/components/collection/profile-editor";
 import { DataSourcesPanel } from "@/components/collection/data-sources-panel";
+import { useExperienceMode } from "@/lib/experience-mode";
 import { api, ApiRequestError } from "@/lib/api-client";
 import type { FieldRegistryResponse, ProductProfile } from "@/lib/types";
 
 export default function EditDataCollectionPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
+  const { mode } = useExperienceMode();
   const [registry, setRegistry] = useState<FieldRegistryResponse | null>(null);
   const [profile, setProfile] = useState<ProductProfile | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -49,18 +51,22 @@ export default function EditDataCollectionPage({ params }: { params: Promise<{ i
       </div>
 
       {registry && profile ? (
-        <Tabs defaultValue="edit">
-          <TabsList>
-            <TabsTrigger value="edit">Edit Profile</TabsTrigger>
-            <TabsTrigger value="sources">Data Sources</TabsTrigger>
-          </TabsList>
-          <TabsContent value="edit">
-            <ProfileEditor fieldRegistry={registry} initialProfile={profile} />
-          </TabsContent>
-          <TabsContent value="sources">
-            <DataSourcesPanel profileId={profile.id} />
-          </TabsContent>
-        </Tabs>
+        mode === "enterprise" ? (
+          <Tabs defaultValue="edit">
+            <TabsList>
+              <TabsTrigger value="edit">Edit Profile</TabsTrigger>
+              <TabsTrigger value="sources">Data Sources</TabsTrigger>
+            </TabsList>
+            <TabsContent value="edit">
+              <ProfileEditor fieldRegistry={registry} initialProfile={profile} />
+            </TabsContent>
+            <TabsContent value="sources">
+              <DataSourcesPanel profileId={profile.id} />
+            </TabsContent>
+          </Tabs>
+        ) : (
+          <ProfileEditor fieldRegistry={registry} initialProfile={profile} />
+        )
       ) : (
         <div className="space-y-4">
           <Skeleton className="h-24 w-full" />

@@ -8,6 +8,7 @@ import { SelectNative } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
 import { ClassificationBadge } from "@/components/collection/classification-badge";
 import { cn } from "@/lib/utils";
+import type { ExperienceMode } from "@/lib/field-modes";
 import type { FieldDefinition, FieldValue } from "@/lib/types";
 
 interface DynamicFieldProps {
@@ -16,12 +17,16 @@ interface DynamicFieldProps {
   rawValue: unknown;
   onChange: (key: string, value: unknown) => void;
   onVerifiedChange: (key: string, verified: boolean) => void;
+  mode: ExperienceMode;
 }
 
 // One renderer for every field in the registry, driven entirely by its
 // FieldDefinition — no per-field bespoke component (FBP §19 consistency
-// rule, applied to the Data Collection form).
-export function DynamicField({ definition, fieldValue, rawValue, onChange, onVerifiedChange }: DynamicFieldProps) {
+// rule, applied to the Data Collection form). The classification badge
+// (Auto Detect / Calculated / etc.) is engineering vocabulary — only
+// Enterprise mode's audience wants it; Beginner/Professional just see a
+// clean label and input.
+export function DynamicField({ definition, fieldValue, rawValue, onChange, onVerifiedChange, mode }: DynamicFieldProps) {
   const isCalculated = definition.collection_type === "calculated";
   const status = fieldValue?.status ?? "missing";
 
@@ -33,7 +38,9 @@ export function DynamicField({ definition, fieldValue, rawValue, onChange, onVer
           {definition.required && <span className="text-destructive">*</span>}
           {definition.unit && <span className="text-xs text-muted-foreground">({definition.unit})</span>}
         </Label>
-        <ClassificationBadge classification={fieldValue?.effective_classification ?? "user_input_required"} />
+        {mode === "enterprise" && (
+          <ClassificationBadge classification={fieldValue?.effective_classification ?? "user_input_required"} />
+        )}
       </div>
 
       {isCalculated ? (
@@ -121,10 +128,12 @@ export function DynamicField({ definition, fieldValue, rawValue, onChange, onVer
           {fieldValue?.verified ? (
             <span className="flex items-center gap-1 text-success">
               <CheckCircle2 className="h-3.5 w-3.5" />
-              Verified
+              {mode === "enterprise" ? "Verified" : "Confirmed"}
             </span>
-          ) : (
+          ) : mode === "enterprise" ? (
             "Mark as manually verified"
+          ) : (
+            "I've double-checked this"
           )}
         </label>
       )}

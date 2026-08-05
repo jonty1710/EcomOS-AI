@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { useExperienceMode } from "@/lib/experience-mode";
 
 const NAV_ITEMS = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -38,8 +39,22 @@ const FUTURE_MODULES = [
   "AI Automation",
 ];
 
+// Progressive disclosure applies to navigation too — a first-time seller
+// doesn't need Compare/Reports/Methodology or a list of 9 unbuilt future
+// modules cluttering the first thing they see.
+const BEGINNER_VISIBLE_HREFS = new Set(["/", "/collection", "/history"]);
+const PROFESSIONAL_HIDDEN_HREFS = new Set(["/methodology"]);
+
 export function Sidebar() {
   const pathname = usePathname();
+  const { mode } = useExperienceMode();
+
+  const navItems = NAV_ITEMS.filter((item) => {
+    if (mode === "beginner") return BEGINNER_VISIBLE_HREFS.has(item.href);
+    if (mode === "professional") return !PROFESSIONAL_HIDDEN_HREFS.has(item.href);
+    return true;
+  });
+  const showFutureModules = mode === "enterprise";
 
   return (
     <aside className="hidden w-60 shrink-0 flex-col border-r border-border bg-card/40 md:flex">
@@ -49,7 +64,7 @@ export function Sidebar() {
       </div>
 
       <nav className="flex-1 space-y-0.5 overflow-y-auto p-2">
-        {NAV_ITEMS.map((item) => {
+        {navItems.map((item) => {
           const active = pathname === item.href;
           const Icon = item.icon;
           return (
@@ -69,20 +84,23 @@ export function Sidebar() {
           );
         })}
 
-        <div className="my-2 border-t border-border" />
-
-        <p className="px-3 pb-1 pt-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          Future Modules
-        </p>
-        {FUTURE_MODULES.map((label) => (
-          <div
-            key={label}
-            title="Coming soon"
-            className="flex cursor-not-allowed items-center gap-2.5 rounded-md px-3 py-2 text-sm text-muted-foreground/50"
-          >
-            {label}
-          </div>
-        ))}
+        {showFutureModules && (
+          <>
+            <div className="my-2 border-t border-border" />
+            <p className="px-3 pb-1 pt-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Future Modules
+            </p>
+            {FUTURE_MODULES.map((label) => (
+              <div
+                key={label}
+                title="Coming soon"
+                className="flex cursor-not-allowed items-center gap-2.5 rounded-md px-3 py-2 text-sm text-muted-foreground/50"
+              >
+                {label}
+              </div>
+            ))}
+          </>
+        )}
       </nav>
 
       <div className="border-t border-border p-2">
