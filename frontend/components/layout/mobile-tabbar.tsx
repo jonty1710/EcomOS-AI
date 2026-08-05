@@ -24,7 +24,7 @@ export function MobileTabbar() {
   const tabs = mode === "beginner" ? TABS.filter((t) => t.href !== "/compare") : TABS;
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-10 flex h-14 border-t border-border bg-card md:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-10 flex h-14 border-t border-border bg-card md:hidden print:hidden">
       {tabs.map((tab) => {
         const active = pathname === tab.href;
         const Icon = tab.icon;

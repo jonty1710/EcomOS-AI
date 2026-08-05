@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SelectNative } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
+import { InfoTooltip } from "@/components/ui/tooltip";
 import { ClassificationBadge } from "@/components/collection/classification-badge";
+import { FRIENDLY_FIELD_TOOLTIPS, friendlyFieldLabel } from "@/lib/friendly-labels";
 import { cn } from "@/lib/utils";
 import type { ExperienceMode } from "@/lib/field-modes";
 import type { FieldDefinition, FieldValue } from "@/lib/types";
@@ -29,14 +31,17 @@ interface DynamicFieldProps {
 export function DynamicField({ definition, fieldValue, rawValue, onChange, onVerifiedChange, mode }: DynamicFieldProps) {
   const isCalculated = definition.collection_type === "calculated";
   const status = fieldValue?.status ?? "missing";
+  const label = friendlyFieldLabel(definition.key, definition.label, mode);
+  const tooltip = mode !== "enterprise" ? FRIENDLY_FIELD_TOOLTIPS[definition.key] : undefined;
 
   return (
     <div className="space-y-1.5">
       <div className="flex flex-wrap items-center justify-between gap-1.5">
         <Label htmlFor={definition.key} className="flex items-center gap-1.5">
-          {definition.label}
+          {label}
           {definition.required && <span className="text-destructive">*</span>}
           {definition.unit && <span className="text-xs text-muted-foreground">({definition.unit})</span>}
+          {tooltip && <InfoTooltip text={tooltip} />}
         </Label>
         {mode === "enterprise" && (
           <ClassificationBadge classification={fieldValue?.effective_classification ?? "user_input_required"} />

@@ -6,10 +6,26 @@ import { AlertTriangle, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ProfileEditor } from "@/components/collection/profile-editor";
+import { ResearchWizard } from "@/components/wizard/research-wizard";
+import { useExperienceMode } from "@/lib/experience-mode";
 import { api, ApiRequestError } from "@/lib/api-client";
 import type { FieldRegistryResponse } from "@/lib/types";
 
+// Beginner mode gets the step-by-step Research Wizard — it needs no field
+// registry (it only ever touches the 7 fields the backend requires), so it
+// renders immediately with no fetch-and-wait. Professional/Enterprise keep
+// the full field-registry-driven form, unchanged.
 export default function NewDataCollectionPage() {
+  const { mode } = useExperienceMode();
+
+  if (mode === "beginner") {
+    return <ResearchWizard />;
+  }
+
+  return <FullProfileEditorPage />;
+}
+
+function FullProfileEditorPage() {
   const [registry, setRegistry] = useState<FieldRegistryResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);

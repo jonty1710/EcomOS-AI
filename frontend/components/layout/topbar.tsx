@@ -6,7 +6,7 @@ import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 export function Topbar() {
   return (
-    <header className="flex h-14 shrink-0 items-center justify-between border-b border-border px-4 md:px-6">
+    <header className="flex h-14 shrink-0 items-center justify-between border-b border-border px-4 md:px-6 print:hidden">
       <Link href="/" className="flex items-center gap-2 md:hidden">
         <Boxes className="h-5 w-5 text-primary" />
         <span className="text-sm font-semibold">EcomOS AI</span>
