@@ -238,9 +238,11 @@ export function ResearchWizard() {
             <Sparkles className="mx-auto h-8 w-8 text-primary" />
             <div>
               <p className="font-medium">
-                {preview?.detected_marketplace
-                  ? `Detected marketplace: ${preview.detected_marketplace}`
-                  : "We're ready to research this product."}
+                {preview?.detected_marketplace ? (
+                  <>Detected marketplace: <span className="capitalize">{preview.detected_marketplace}</span></>
+                ) : (
+                  "We're ready to research this product."
+                )}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
                 {preview?.fields.category?.value
