@@ -53,10 +53,10 @@ export function ResearchWizard() {
     const name = new URLSearchParams(window.location.search).get("name");
     if (name) setEntry(name);
   }, []);
-  const [needsNameSeparately, setNeedsNameSeparately] = useState(false);
   const [productName, setProductName] = useState("");
   const [sourceUrl, setSourceUrl] = useState("");
   const [sellingPrice, setSellingPrice] = useState("");
+  const looksLikeUrl = /^https?:\/\//i.test(entry.trim());
 
   // Step 2 (autofill result)
   const [preview, setPreview] = useState<ProductProfile | null>(null);
@@ -73,15 +73,8 @@ export function ResearchWizard() {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function handleEntryContinue() {
-    const looksLikeUrl = /^https?:\/\//i.test(entry.trim());
-    if (looksLikeUrl) {
-      setSourceUrl(entry.trim());
-      setNeedsNameSeparately(true);
-      if (productName.trim() === "") return; // wait for the name field to be filled
-    } else {
-      setProductName(entry.trim());
-    }
-    if ((looksLikeUrl ? productName : entry).trim() === "" || sellingPrice.trim() === "") return;
+    if (looksLikeUrl) setSourceUrl(entry.trim());
+    else setProductName(entry.trim());
     setStep("autofill");
   }
 
@@ -188,7 +181,7 @@ export function ResearchWizard() {
                 onChange={(e) => setEntry(e.target.value)}
               />
             </div>
-            {needsNameSeparately && (
+            {looksLikeUrl && (
               <div className="space-y-1.5">
                 <Label htmlFor="product_name">
                   We can&apos;t read data from links yet — what&apos;s this product called?
@@ -218,8 +211,7 @@ export function ResearchWizard() {
               size="lg"
               className="h-12 w-full text-base"
               disabled={
-                (/^https?:\/\//i.test(entry.trim()) ? productName.trim() === "" : entry.trim() === "") ||
-                sellingPrice.trim() === ""
+                (looksLikeUrl ? productName.trim() === "" : entry.trim() === "") || sellingPrice.trim() === ""
               }
               onClick={handleEntryContinue}
             >
